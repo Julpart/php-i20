@@ -1,7 +1,7 @@
 <?php
 $catalog = selectCategory();
 ?>
-
+<a class="form-link" href="form.php">Форма</a>
 <ul class="catalog">
     <?php foreach ($catalog as $item) : ?>
         <li class="catalog__item">

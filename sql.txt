@@ -1,0 +1,67 @@
+Все используемые запросы и их описание
+
+
+
+
+----1 Получение всей информации из таблицы по id
+
+"SELECT * FROM $base where $baseId = ?";
+
+----2 Получение списка категорий с количеством отображаемых товаров в них, 
+также используется для получения списка категорий с кол-ом товаров больше определеного числа, а также для получения списка категорий, включая пустые
+SELECT s.section_id, s.header, count(p.product_id) as count FROM section s 
+	LEFT JOIN sectionproduct sp ON sp.section_id = s.section_id 
+    LEFT JOIN product p ON p.product_id =sp.product_id and p.display = 1
+    GROUP BY s.section_id
+    HAVING count>=$a
+    ORDER BY count DESC
+
+
+
+----3 Получение информации о товарах необходимой для выведения списка товаров на странице определенной категории
+"SELECT p.product_id,p.header as name,p.mainSection_id,s.header as category ,i.url,i.alt FROM `product` p
+    JOIN section s
+    ON s.section_id = p.mainSection_id
+    JOIN image i
+    ON i.image_id = p.mainimg_id
+    JOIN sectionproduct sp
+    ON sp.product_id=p.product_id
+    WHERE sp.section_id = $id and p.display=true LIMIT $limit;";
+
+----4 Получение количества отображаемых товаров в определенной категории. Используется для реализации прокручиваемой страницы категории(Пример: category.inc.php 4)
+"SELECT count(*) as count FROM `product` p
+    JOIN section s
+    ON s.section_id = p.mainSection_id
+    JOIN image i
+    ON i.image_id = p.mainimg_id
+    JOIN sectionproduct sp
+    ON sp.product_id=p.product_id
+    WHERE sp.section_id = $id and p.display=true;"
+
+----5 Получение всех категорий в которых представлен товар
+"SELECT s.section_id,s.header FROM `section` s
+        JOIN sectionproduct sp
+        ON sp.section_id = s.section_id
+        JOIN product p
+        ON p.product_id = sp.product_id
+        WHERE p.product_id = $id";
+
+----6 Получение всей ифнормации о изображениях для товара
+SELECT i.image_id,i.url,i.alt FROM `image` i
+        JOIN imageproduct ip
+        ON ip.image_id = i.image_id
+        JOIN product p
+        ON p.product_id =ip.product_id
+        WHERE p.product_id = $id"
+
+----7 Вставка данных формы в таблицу
+"INSERT INTO form(name,email,date,gender,theme,info,contract) VALUES(?,?,?,?,?,?,?)"
+
+
+
+
+
+
+
+
+        

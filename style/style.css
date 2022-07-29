@@ -478,6 +478,18 @@ a {
 
 }
 
+.category__button-show {
+    text-align: center;
+    margin: 20px auto;
+    width: 190px;
+    background-color: #400e91;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: Circe700, sans-serif;
+    border-radius: 5%;
+
+}
+
 .header-text {
     font-size: 34px;
     font-weight: 600;
@@ -602,4 +614,20 @@ a {
     border-radius: 5px;
     resize: none;
     width: 80%;
+}
+
+.form-link {
+    border: 2px solid #400e91;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: Circe300, sans-serif;
+    margin-left: 50px;
+
+
+}
+
+.main-form {
+    padding: 50px;
 }

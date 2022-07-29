@@ -23,44 +23,69 @@ function selectById(int $id, string $base)
     $row = $res->fetch_assoc();
     return ($row);
 }
-function selectCategory($a = 1) //Данная функция реализует также два дополнительных sql запроса из 5 этапа выполнения задания
+
+
+function selectCategory($a = 1)
 {
     global $link;
     if (!$link) {
         die('Ошибка соединения с базой данных');
     }
-    $sql = "SELECT s.section_id, s.header,IFNULL(SUM(p.display),0) as count
-        FROM section s 
-        LEFT JOIN sectionproduct sp ON sp.section_id = s.section_id 
-        LEFT JOIN product p ON p.product_id =sp.product_id 
-        GROUP BY s.section_id 
-        HAVING count>=$a 
-        ORDER BY count DESC;";
+    $sql = "SELECT s.section_id, s.header, count(p.product_id) as count FROM section s 
+	LEFT JOIN sectionproduct sp ON sp.section_id = s.section_id 
+    LEFT JOIN product p ON p.product_id =sp.product_id and p.display = 1
+    GROUP BY s.section_id
+    HAVING count>=$a
+    ORDER BY count DESC";
     $result = $link->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $rows[] = $row;
     }
     return ($rows);
 }
-function selectProductsOfCategory(int $id)
+
+function selectProductsOfCategory(int $id, bool $bool = true, int $start = 0, int $end = 0)
 {
+    if ($bool) {
+        $limit = "12";
+    } else {
+        $limit = "{$start}, {$end}";
+    }
     global $link;
     if (!$link) {
         die('Ошибка соединения с базой данных');
     }
-    $sql = "SELECT p.product_id,p.header as name,p.mainSection_id,s.header as category ,i.url,i.alt FROM `product` p\n"
-        . "JOIN section s\n"
-        . "ON s.section_id = p.mainSection_id\n"
-        . "JOIN image i\n"
-        . "ON i.image_id = p.mainimg_id\n"
-        . "JOIN sectionproduct sp\n"
-        . "ON sp.product_id=p.product_id\n"
-        . "WHERE sp.section_id = $id and p.display=true;";
+    $sql = "SELECT p.product_id,p.header as name,p.mainSection_id,s.header as category ,i.url,i.alt FROM `product` p
+    JOIN section s
+    ON s.section_id = p.mainSection_id
+    JOIN image i
+    ON i.image_id = p.mainimg_id
+    JOIN sectionproduct sp
+    ON sp.product_id=p.product_id
+    WHERE sp.section_id = $id and p.display=true LIMIT $limit;";
     $result = $link->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $rows[] = $row;
     }
     return ($rows);
+}
+function selectCountOfCategory(int $id)
+{
+    global $link;
+    if (!$link) {
+        die('Ошибка соединения с базой данных');
+    }
+    $sql = "SELECT count(*) as count FROM `product` p
+    JOIN section s
+    ON s.section_id = p.mainSection_id
+    JOIN image i
+    ON i.image_id = p.mainimg_id
+    JOIN sectionproduct sp
+    ON sp.product_id=p.product_id
+    WHERE sp.section_id = $id and p.display=true;";
+    $result = $link->query($sql);
+    $row = $result->fetch_array(MYSQLI_ASSOC);
+    return $row['count'];
 }
 function selectProductCat(int $id)
 {
