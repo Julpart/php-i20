@@ -33,7 +33,7 @@ function selectCategory($a = 1)
     }
     $sql = "SELECT s.section_id, s.header, count(p.product_id) as count FROM section s 
 	LEFT JOIN sectionproduct sp ON sp.section_id = s.section_id 
-    LEFT JOIN product p ON p.product_id =sp.product_id and p.display = 1
+    LEFT JOIN product p ON p.product_id =sp.product_id and p.display = true
     GROUP BY s.section_id
     HAVING count>=$a
     ORDER BY count DESC";
@@ -96,9 +96,7 @@ function selectProductCat(int $id)
     $sql = "SELECT s.section_id,s.header FROM `section` s
         JOIN sectionproduct sp
         ON sp.section_id = s.section_id
-        JOIN product p
-        ON p.product_id = sp.product_id
-        WHERE p.product_id = $id";
+        WHERE sp.product_id = $id";
     $result = $link->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $rows[] = $row;
@@ -114,9 +112,7 @@ function selectProductImg(int $id)
     $sql = "SELECT i.image_id,i.url,i.alt FROM `image` i
         JOIN imageproduct ip
         ON ip.image_id = i.image_id
-        JOIN product p
-        ON p.product_id =ip.product_id
-        WHERE p.product_id = $id";
+        WHERE ip.product_id = $id";
     $result = $link->query($sql);
     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         $rows[] = $row;

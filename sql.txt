@@ -11,7 +11,7 @@
 также используется для получения списка категорий с кол-ом товаров больше определеного числа, а также для получения списка категорий, включая пустые
 SELECT s.section_id, s.header, count(p.product_id) as count FROM section s 
 	LEFT JOIN sectionproduct sp ON sp.section_id = s.section_id 
-    LEFT JOIN product p ON p.product_id =sp.product_id and p.display = 1
+    LEFT JOIN product p ON p.product_id =sp.product_id and p.display = true
     GROUP BY s.section_id
     HAVING count>=$a
     ORDER BY count DESC
@@ -42,17 +42,13 @@ SELECT s.section_id, s.header, count(p.product_id) as count FROM section s
 "SELECT s.section_id,s.header FROM `section` s
         JOIN sectionproduct sp
         ON sp.section_id = s.section_id
-        JOIN product p
-        ON p.product_id = sp.product_id
-        WHERE p.product_id = $id";
+        WHERE sp.product_id = $id";
 
 ----6 Получение всей ифнормации о изображениях для товара
 SELECT i.image_id,i.url,i.alt FROM `image` i
         JOIN imageproduct ip
         ON ip.image_id = i.image_id
-        JOIN product p
-        ON p.product_id =ip.product_id
-        WHERE p.product_id = $id"
+        WHERE ip.product_id = $id"
 
 ----7 Вставка данных формы в таблицу
 "INSERT INTO form(name,email,date,gender,theme,info,contract) VALUES(?,?,?,?,?,?,?)"
