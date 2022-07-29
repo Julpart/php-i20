@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3305
--- Время создания: Июл 28 2022 г., 06:26
+-- Время создания: Июл 29 2022 г., 06:56
 -- Версия сервера: 8.0.24
 -- Версия PHP: 7.4.27
 
@@ -48,7 +48,8 @@ CREATE TABLE `form` (
 INSERT INTO `form` (`form_id`, `name`, `email`, `date`, `gender`, `theme`, `info`, `contract`) VALUES
 (4, 'Artem', 'artem@mail.tuy', '2001-09-10', 'male', 'Test', 'Test', 1),
 (5, 'artem', 'artem@mail.ru', '2001-09-10', 'male', 'Test', 'Test', 1),
-(6, 'Artem', 'artem@mail.ru', '2001-09-10', 'male', 'Test', 'Test', 1);
+(6, 'Artem', 'artem@mail.ru', '2001-09-10', 'male', 'Test', 'Test', 1),
+(9, 'Artem', 'aasasa@mail.ru', '2022-07-08', 'male', 'a', 'a', 1);
 
 -- --------------------------------------------------------
 
@@ -613,7 +614,7 @@ ALTER TABLE `sectionproduct`
 -- AUTO_INCREMENT для таблицы `form`
 --
 ALTER TABLE `form`
-  MODIFY `form_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `form_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `image`
@@ -625,7 +626,7 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT для таблицы `imageproduct`
 --
 ALTER TABLE `imageproduct`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT для таблицы `product`
