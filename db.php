@@ -76,10 +76,6 @@ function selectCountOfCategory(int $id)
         die('Ошибка соединения с базой данных');
     }
     $sql = "SELECT count(*) as count FROM `product` p
-    JOIN section s
-    ON s.section_id = p.mainSection_id
-    JOIN image i
-    ON i.image_id = p.mainimg_id
     JOIN sectionproduct sp
     ON sp.product_id=p.product_id
     WHERE sp.section_id = $id and p.display=true;";

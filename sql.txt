@@ -30,10 +30,6 @@ SELECT s.section_id, s.header, count(p.product_id) as count FROM section s
 
 ----4 Получение количества отображаемых товаров в определенной категории. Используется для реализации прокручиваемой страницы категории(Пример: category.inc.php 4)
 "SELECT count(*) as count FROM `product` p
-    JOIN section s
-    ON s.section_id = p.mainSection_id
-    JOIN image i
-    ON i.image_id = p.mainimg_id
     JOIN sectionproduct sp
     ON sp.product_id=p.product_id
     WHERE sp.section_id = $id and p.display=true;"
