@@ -27,7 +27,7 @@ foreach ($productImages as $item) {
             <h2 class="card__name"><?= $arr['header'] ?></h2>
             <nav class="card__links">
                 <?php foreach ($productCategories as $item) : ?>
-                    <a href="products.php?cat_id=<?= $item['section_id'] ?>" class="card__links-item"><?= $item['header'] ?></a>
+                    <a href="index.php?cat_id=<?= $item['section_id'] ?>" class="card__links-item"><?= $item['header'] ?></a>
                 <? endforeach; ?>
             </nav>
             <div class="card__costs">

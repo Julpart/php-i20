@@ -7,6 +7,9 @@ $nameStyle = "";
 $emailStyle = "";
 $dateStyle = "";
 $errorString = "";
+$name = "";
+$email = "";
+$date = "";
 function valid($data)
 {
     $data = strip_tags($data);
@@ -72,6 +75,15 @@ if (isset($_COOKIE['error'])) {
 if (isset($_COOKIE['set'])) {
     $result = $_COOKIE['set'];
 }
+if (isset($_COOKIE['name'])) {
+    $name = $_COOKIE['name'];
+}
+if (isset($_COOKIE['email'])) {
+    $email = $_COOKIE['email'];
+}
+if (isset($_COOKIE['date'])) {
+    $date = $_COOKIE['date'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,15 +102,15 @@ if (isset($_COOKIE['set'])) {
 <body>
     <main>
         <div class="main-form">
-            <a class="form-link" href="products.php">Назад</a>
+            <a class="form-link" href="index.php">Назад</a>
             <div class="container-form">
                 <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="POST" class="form-main">
                     <label for="name" class="form-label">Имя:</label>
-                    <input id="name" name="name" type="text" value="<?= $_COOKIE["name"] ?>" required class="form-input" <?= $nameStyle ?>>
+                    <input id="name" name="name" type="text" value="<?= $name ?>" required class="form-input" <?= $nameStyle ?>>
                     <label for="email" class="form-label">Почта:</label>
-                    <input id="email" name="email" type="text" value="<?= $_COOKIE["email"] ?>" required class="form-input" <?= $emailStyle ?>>
+                    <input id="email" name="email" type="text" value="<?= $email ?>" required class="form-input" <?= $emailStyle ?>>
                     <label for="date" class="form-label">Год рождения:</label>
-                    <input id="date" name="date" type="date" value="<?= $_COOKIE["date"] ?>" required class="form-input" <?= $dateStyle ?>>
+                    <input id="date" name="date" type="date" value="<?= $date ?>" required class="form-input" <?= $dateStyle ?>>
                     <label for="sex" class="form-label">Пол:</label>
                     <div class="form-block">
                         <input type="radio" id="male" name="sex" value="male" <?= $male ?>><span class="form-label">Муж.</span>
@@ -120,8 +132,12 @@ if (isset($_COOKIE['set'])) {
         </div>
     </main>
     <?php if (isset($error)) echo "<script>$.notify('$errorString', 'error');</script>";
-    elseif ($result) echo "<script>$.notify('Данные сохранены', 'success');</script>";
-    elseif (isset($result)) echo "<script>$.notify(' Данные не сохранены, что-то пошло не так', 'error');</script>" ?>
+    if (isset($result)) {
+        if (!$result) echo "<script>$.notify(' Данные не сохранены, что-то пошло не так', 'error');</script>";
+        elseif ($result) echo "<script>$.notify('Данные сохранены', 'success');</script>";
+    }
+    ?>
+
 </body>
 
 </html>
